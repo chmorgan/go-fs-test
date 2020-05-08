@@ -19,8 +19,6 @@ func randSeq(n int) string {
 }
 
 func writeToFile(filename string, dataLength int) {
-	interval := time.Millisecond * 500
-
 	f, err := os.Create(filename)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -36,8 +34,6 @@ func writeToFile(filename string, dataLength int) {
 		f.Sync()
 
 		fmt.Printf("wrote %d bytes to %s\n", len(data), filename)
-
-		time.Sleep(interval)
 	}
 }
 
@@ -49,7 +45,10 @@ func main() {
 
 	fmt.Printf("engineLogFilename '%s', logsfilename '%s'\n", *engineLogFilename, *logsFilename)
 
-	engineDataLength := 64
+	// Actual system captures a 254 byte message every 1s and writes data every 60s
+	// so 254 bytes * 60 = 15420 bytes every 1 minute
+
+	engineDataLength := 254 * 60 // 254 bytes per message * 60 seconds of data
 	logsDataLength := 256
 	go writeToFile(*engineLogFilename, engineDataLength)
 	go writeToFile(*logsFilename, logsDataLength)
