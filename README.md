@@ -19,6 +19,6 @@ Run the test program on each device:
 
   go-fs-test {mountpoint}/file1.txt
 
-  (pull power randomly here)
+  (unplug device randomly here)
 
-  (Reboot and verify that the file content looks valid)
+  (plug device back in and check that data in the files is valid)
